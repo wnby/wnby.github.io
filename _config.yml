@@ -9,8 +9,7 @@ navigation:
     url: /
   - name: 文章
     url: /archive
-  - name: 关于
-    url: /about
+
 
 # 页脚只保留关键社交链接
 footer-links:
