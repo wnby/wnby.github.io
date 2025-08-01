@@ -1,34 +1,288 @@
 ---
 layout: page
-title: 文章
+title: 文章时间线
 permalink: /archive/
 ---
 
-{% if site.posts.size == 0 %}
-  <h2>No post found</h2>
-{% endif %}
+{% assign current_year = site.time | date: '%Y' | plus:0 %}
+{% assign years = site.posts | group_by_exp: "post", "post.date | date: '%Y'" | sort: "name" | reverse %}
 
-<ul class="archive">
-  {% for post in site.posts %}
-    {% unless post.next %}
-      <h2>{{ post.date | date: '%Y' }}</h2>
-    {% else %}  
-      {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
-      {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
-      {% if year != nyear %}
-        <h2>{{ post.date | date: '%Y' }}</h2>
-      {% endif %}
-    {% endunless %}
+<div class="archive-container">
+  <!-- 左侧侧边栏 - 年份分类 -->
+  <div class="archive-sidebar">
+    <div class="season-tags">
+      <a href="#" data-season="all" class="active">全部</a>
+      <a href="#" data-season="spring">春</a>
+      <a href="#" data-season="summer">夏</a>
+      <a href="#" data-season="autumn">秋</a>
+      <a href="#" data-season="winter">冬</a>
+    </div>
+    
+    <h3 class="sidebar-title">时间档案</h3>
+    <ul class="year-list">
+      {% for year_group in years %}
+        {% assign year = year_group.name | plus:0 %}
+        <li>
+          <a href="#year-{{ year }}" {% if year == current_year %}class="current-year"{% endif %}>
+            {{ year }}年 ({{ year_group.size }})
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  
+  <!-- 右侧主内容区 -->
+  <div class="archive-content">
+    <div class="search-box">
+      <input type="text" id="postSearch" placeholder="搜索知识记录...">
+      <span class="search-icon">🔍</span>
+    </div>
+    
+    {% if site.posts.size == 0 %}
+      <div class="empty-state">
+        <svg class="empty-icon" viewBox="0 0 24 24">
+          <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V7H19V19M17,17H7V9H17V17Z" />
+        </svg>
+        <h3>感知空窗期</h3>
+        <p>尚未有探索记录，<a href="/about">了解我的研究领域</a></p>
+      </div>
+    {% endif %}
 
-    <li>
-      {% if post.link %}
-      <a href="{{ post.link }}">
-      {% else %}
-      <a href="{{ site.baseurl }}{{ post.url }}">    
-      {% endif %}
-        {{ post.title }}
-      </a>
-      <time>{{ post.date | date: "%Y-%m-%d" }}</time>
-    </li>
-  {% endfor %}
-</ul>
+    {% for year_group in years %}
+      {% assign year = year_group.name | plus:0 %}
+      <section id="year-{{ year }}" class="year-section">
+        <h2 class="year-title">
+          <span>{{ year }}</span>
+          <span class="year-divider">感知纪年</span>
+        </h2>
+        
+        <ul class="post-list">
+          {% for post in year_group.items %}
+            {% assign post_month = post.date | date: '%m' | plus:0 %}
+            <li class="post-item" 
+                data-season="{% if post_month <= 2 or post_month == 12 %}winter{% elsif post_month <= 5 %}spring{% elsif post_month <= 8 %}summer{% else %}autumn{% endif %}">
+              <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+              <a href="{{ site.baseurl }}{{ post.url }}">
+                {{ post.title }}
+              </a>
+              <div class="post-meta">
+                {% for tag in post.tags limit:3 %}
+                  <span class="tag">{{ tag }}</span>
+                {% endfor %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+// 季节筛选功能
+document.querySelectorAll('.season-tags a').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // 更新按钮激活状态
+    document.querySelector('.season-tags a.active').classList.remove('active');
+    this.classList.add('active');
+    
+    const season = this.getAttribute('data-season');
+    const allPosts = document.querySelectorAll('.post-item');
+    
+    allPosts.forEach(post => {
+      if (season === 'all') {
+        post.style.display = 'flex';
+      } else {
+        post.style.display = post.getAttribute('data-season') === season ? 'flex' : 'none';
+      }
+    });
+  });
+});
+
+// 文章搜索功能
+document.getElementById('postSearch').addEventListener('input', function() {
+  const searchTerm = this.value.toLowerCase();
+  const postItems = document.querySelectorAll('.post-item');
+  
+  postItems.forEach(item => {
+    const postTitle = item.querySelector('a').textContent.toLowerCase();
+    item.style.display = postTitle.includes(searchTerm) ? 'flex' : 'none';
+  });
+});
+</script>
+
+<style>
+/* 归档页面专用样式 */
+.archive-container {
+  display: flex;
+  gap: 40px;
+}
+
+.archive-sidebar {
+  width: 220px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.season-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.season-tags a {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #e6f7ff;
+  color: #1890ff;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.season-tags a.active, 
+.season-tags a:hover {
+  background: #1890ff;
+  color: white;
+}
+
+.year-list {
+  list-style: none;
+  padding: 0;
+}
+
+.year-list li {
+  margin-bottom: 10px;
+}
+
+.year-list a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #595959;
+  transition: all 0.2s;
+}
+
+.year-list a.current-year {
+  font-weight: bold;
+  background: #f0f7ff;
+}
+
+.year-list a:hover {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.archive-content {
+  flex: 1;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 40px 12px 20px;
+  border: 1px solid #e8e8e8;
+  border-radius: 30px;
+  font-size: 16px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bfbfbf;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  fill: #f0f0f0;
+  margin-bottom: 20px;
+}
+
+.year-title {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.year-title span:first-child {
+  font-size: 24px;
+  font-weight: bold;
+  color: #262626;
+}
+
+.year-divider {
+  flex: 1;
+  height: 1px;
+  margin: 0 15px;
+  background: #f0f0f0;
+  color: #8c8c8c;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-item {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-left: 3px solid #91d5ff;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  background: white;
+  border-radius: 0 8px 8px 0;
+}
+
+.post-item:hover {
+  border-left-color: #1890ff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.post-item time {
+  font-size: 14px;
+  color: #8c8c8c;
+  margin-bottom: 5px;
+}
+
+.post-item a {
+  font-size: 18px;
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 8px;
+  text-decoration: none;
+}
+
+.post-meta {
+  display: flex;
+  gap: 8px;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 3px 8px;
+  background: #e6f7ff;
+  color: #1890ff;
+  border-radius: 4px;
+}
+</style>
