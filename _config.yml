@@ -3,9 +3,9 @@
 #
 
 # Name of your site (displayed in the header)
-name: "goldstine's blog"
+name: "感知奇点"
 # Short bio or description (displayed in the header)
-description: "个人技术公众号：Goldstine  分享编程资源 | 学习路线"
+description: "bupt在读，随便写写"
 
 #
 # Flags below are optional
@@ -44,11 +44,11 @@ excerpt_separator: <!-- more -->
 
 # Includes an icon in the footer for each username you enter
 footer-links:
-  #weibo: frommidworld #请输入你的微博个性域名 https://www.weibo.com/<thispart>
+
   behance: # https://www.behance.net/<username>
   dribbble:
-  zhihu: goldstine
-  email: 15797899690@163.com
+  zhihu:
+  email:
   facebook:
   flickr:
   github: goldstine 
@@ -71,7 +71,7 @@ disqus: # fromendworld
 
 # Gitalk
 gitalk:
-  clientID: 062eeb9a0adf39976274
+  clientID: Ov23liLSRFxmsHvoK9iz
   clientSecret: 3c319e4cf4a90b70809d7fd1b25e4c6c10376a10
   repo: goldstine.github.io
   owner: goldstine
