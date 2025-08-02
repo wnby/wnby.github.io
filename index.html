@@ -2,7 +2,6 @@
 layout: default
 ---
 
-<!-- 菜单页 -->
 <div class="home-container">
   <!-- 实时时钟显示 -->
   <div class="real-time-clock">
@@ -16,7 +15,7 @@ layout: default
     <ul id="results-container"></ul>
   </div>
 
-  <!-- 最新文章区域 -->
+  <!-- 最新文章区域 - 简化版 -->
   <div class="latest-post-section">
     <div class="section-header">
       <h2>最新文章</h2>
@@ -29,47 +28,29 @@ layout: default
         <h1>
           <a href="{{ site.baseurl }}{{ latest_post.url }}">{{ latest_post.title }}</a>
         </h1>
-        <div class="post-meta">
-          <span class="date">
-            <i class="icon calendar"></i>
-            {{ latest_post.date | date: "%Y-%m-%d" }}
-          </span>
-          <span class="reading-time">
-            <i class="icon clock"></i>
-            阅读时间 {{ latest_post.content | reading_time | append: '分钟' }}
-          </span>
-        </div>
       </div>
-
-      <div class="entry">
-        {{ latest_post.excerpt | truncate: 200 }}
-      </div>
-
+      
       <div class="post-footer">
-        <ul class="tag">
-          {% for tag in latest_post.tags %}
-          <li>
-            <a href="{{ site.url }}{{ site.baseurl }}/tags#{{ tag }}">
-              <i class="icon tag"></i> {{ tag }}
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
         <a href="{{ site.baseurl }}{{ latest_post.url }}" class="read-more">
-          阅读全文 <i class="icon arrow-right"></i>
+          阅读全文
         </a>
       </div>
     </article>
+    
+    <!-- 所有文章链接 -->
+    <div class="all-posts-link">
+      <a href="/archive">查看所有文章</a>
+    </div>
   </div>
 
   <!-- 特色区域 -->
   <div class="features">
     <div class="feature-box">
-      <h3><i class="icon camera"></i> 摄影计划</h3>
+      <h3>摄影计划</h3>
       <p>2025.9-2025.10，计划去河北，河南两个省</p>
       <ul>
-        <li><i class="icon location"></i> 郑州，洛阳，开封</li>
-        <li><i class="icon location"></i> 秦皇岛</li>
+        <li>郑州，洛阳，开封</li>
+        <li>秦皇岛</li>
       </ul>
       <div class="countdown">
         <div>距离计划开始还有</div>
@@ -82,11 +63,11 @@ layout: default
     </div>
     
     <div class="feature-box">
-      <h3><i class="icon brain"></i> 研究兴趣</h3>
+      <h3>研究兴趣</h3>
       <ul>
-        <li><i class="icon ai"></i> 多模态大模型</li>
-        <li><i class="icon vision"></i> 计算机视觉</li>
-        <li><i class="icon search"></i> 检索增强生成</li>
+        <li>多模态大模型</li>
+        <li>计算机视觉</li>
+        <li>检索增强生成</li>
       </ul>
     </div>
   </div>
@@ -100,13 +81,13 @@ layout: default
       
       <div class="interests">
         <div class="interest-item">
-          <i class="icon game"></i> 云顶之奕·实况足球
+          云顶之奕·实况足球
         </div>
         <div class="interest-item">
-          <i class="icon soccer"></i> 巴萨·曼城·黑龙江冰城
+          巴萨·曼城·黑龙江冰城
         </div>
         <div class="interest-item">
-          <i class="icon basketball"></i> 开拓者
+          开拓者
         </div>
       </div>
     </div>
@@ -116,15 +97,12 @@ layout: default
 <!-- 访问统计 -->
 <div class="stats-container">
   <div class="stat-item">
-    <i class="icon eye"></i>
     <span id="busuanzi_value_site_pv">0</span>次访问
   </div>
   <div class="stat-item">
-    <i class="icon user"></i>
     <span id="busuanzi_value_site_uv">0</span>位访客
   </div>
   <div class="stat-item">
-    <i class="icon post"></i>
     {{ site.posts.size }}篇文章
   </div>
 </div>
@@ -136,6 +114,12 @@ layout: default
     padding: 0;
     box-sizing: border-box;
     font-family: 'Microsoft YaHei', sans-serif;
+  }
+  
+  /* 设置纯白色背景 */
+  body {
+    background-color: white !important;
+    color: #333;
   }
   
   /* 整体容器 */
@@ -175,22 +159,20 @@ layout: default
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     transition: all 0.3s;
   }
   
   #search-input:focus {
     outline: none;
     border-color: #3498db;
-    box-shadow: 0 2px 15px rgba(52, 152, 219, 0.3);
   }
   
-  /* 最新文章区域 - 修改部分 */
+  /* 最新文章区域 */
   .latest-post-section {
     margin-bottom: 40px;
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    border-radius: 8px;
     overflow: hidden;
   }
   
@@ -198,10 +180,9 @@ layout: default
     display: flex;
     align-items: center;
     padding: 15px 20px;
-    /* 移除了渐变背景 */
-    background: white;
-    color: #2c3e50; /* 文字颜色改为深色 */
-    border-bottom: 1px solid #ecf0f1; /* 添加底部边框 */
+    background: #f8f9fa;
+    color: #333;
+    border-bottom: 1px solid #eee;
   }
   
   .section-header h2 {
@@ -216,13 +197,6 @@ layout: default
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
-    animation: pulse 2s infinite;
-  }
-  
-  @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
   }
   
   .post {
@@ -231,7 +205,7 @@ layout: default
   
   .post-header h1 {
     font-size: 1.8rem;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   
   .post-header h1 a {
@@ -244,55 +218,12 @@ layout: default
     color: #3498db;
   }
   
-  .post-meta {
-    display: flex;
-    gap: 20px;
-    color: #7f8c8d;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-  }
-  
-  .entry {
-    line-height: 1.7;
-    color: #34495e;
-    margin-bottom: 20px;
-  }
-  
-  .post-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .tag {
-    display: flex;
-    gap: 10px;
-    list-style: none;
-  }
-  
-  .tag li a {
-    display: block;
-    padding: 5px 12px;
-    background: #ecf0f1;
-    border-radius: 20px;
-    color: #7f8c8d;
-    font-size: 0.85rem;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-  
-  .tag li a:hover {
-    background: #3498db;
-    color: white;
-  }
-  
   .read-more {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     padding: 8px 20px;
     background: #3498db;
     color: white;
-    border-radius: 20px;
+    border-radius: 4px;
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s;
@@ -300,7 +231,18 @@ layout: default
   
   .read-more:hover {
     background: #2980b9;
-    transform: translateX(5px);
+  }
+  
+  .all-posts-link {
+    padding: 15px 25px;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
+  
+  .all-posts-link a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
   }
   
   /* 特色区域 */
@@ -314,24 +256,15 @@ layout: default
     flex: 1;
     padding: 25px;
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: all 0.3s;
-  }
-  
-  .feature-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    border-radius: 8px;
   }
   
   .feature-box h3 {
     color: #2c3e50;
     padding-bottom: 10px;
     margin-bottom: 15px;
-    border-bottom: 2px solid #ecf0f1;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    border-bottom: 1px solid #eee;
   }
   
   .feature-box p {
@@ -346,16 +279,13 @@ layout: default
   
   .feature-box ul li {
     padding: 8px 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px dashed #ecf0f1;
+    border-bottom: 1px solid #eee;
   }
   
   .countdown {
     background: #f8f9fa;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 8px;
     text-align: center;
   }
   
@@ -370,9 +300,9 @@ layout: default
   .profile {
     display: flex;
     background: white;
-    border-radius: 12px;
+    border: 1px solid #eee;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     margin-bottom: 40px;
   }
   
@@ -380,6 +310,7 @@ layout: default
     width: 150px;
     height: 150px;
     object-fit: cover;
+    border-right: 1px solid #eee;
   }
   
   .bio {
@@ -391,7 +322,7 @@ layout: default
     color: #2c3e50;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #ecf0f1;
+    border-bottom: 1px solid #eee;
   }
   
   .bio p {
@@ -408,18 +339,7 @@ layout: default
   }
   
   .interest-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    transition: all 0.3s;
-  }
-  
-  .interest-item:hover {
-    background: #3498db;
-    color: white;
+    padding: 8px 0;
   }
   
   /* 统计区域 */
@@ -429,44 +349,14 @@ layout: default
     gap: 30px;
     padding: 20px;
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    border-radius: 8px;
   }
   
   .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #7f8c8d;
   }
-  
-  /* 图标样式 */
-  .icon {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-  }
-  
-  .calendar { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f8c8d'%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z'/%3E%3C/svg%3E"); }
-  .clock { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f8c8d'%3E%3Cpath d='M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/%3E%3Cpath d='M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z'/%3E%3C/svg%3E"); }
-  .tag { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f8c8d'%3E%3Cpath d='M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/%3E%3C/svg%3E"); }
-  .arrow-right { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/%3E%3C/svg%3E"); }
-  .camera { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M12 15.2A3.2 3.2 0 1 0 8.8 12 3.2 3.2 0 0 0 12 15.2z'/%3E%3Cpath d='M20 5h-3.17l-1.24-1.35A1.99 1.99 0 0 0 14.12 3H9.88c-.56 0-1.1.24-1.48.65L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-8 13c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z'/%3E%3C/svg%3E"); }
-  .location { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E"); }
-  .brain { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M12 4c-1.93 0-3.5 1.57-3.5 3.5S10.07 11 12 11s3.5-1.57 3.5-3.5S13.93 4 12 4zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 6 12 6s1.5.67 1.5 1.5S12.83 9 12 9zm-7 5c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2v1c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2v-1zm0 4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2v1c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2v-1z'/%3E%3C/svg%3E"); }
-  .ai { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4v6zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21z'/%3E%3Cpath d='M8.46 12.63l1.11.71c.19.19.44.29.7.29h4.66c.26 0 .51-.1.7-.29l1.11-.71c.25-.16.4-.43.4-.73 0-.3-.15-.57-.4-.73l-1.11-.71a1.01 1.01 0 0 1-.7-.29h-4.66c-.26 0-.51.1-.7.29l-1.11.71c-.25.16-.4.43-.4.73 0 .3.15.57.4.73z'/%3E%3C/svg%3E"); }
-  .vision { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M12 6.5c-3.79 0-7.17 2.13-8.82 5.5 1.65 3.37 5.02 5.5 8.82 5.5s7.17-2.13 8.82-5.5C19.17 8.63 15.79 6.5 12 6.5zm0 10c-2.48 0-4.5-2.02-4.5-4.5S9.52 7.5 12 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z'/%3E%3Ccircle cx='12' cy='12' r='2.5'/%3E%3C/svg%3E"); }
-  .search { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E"); }
-  .game { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M15 7.5V2H9v5.5l3 3 3-3zM7.5 9H2v6h5.5l3-3-3-3zM9 16.5V22h6v-5.5l-3-3-3 3zM16.5 9l-3 3 3 3H22V9h-5.5z'/%3E%3C/svg%3E"); }
-  .soccer { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%232c3e50' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='2' fill='%232c3e50'/%3E%3C/svg%3E"); }
-  .basketball { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3E%3Cpath d='M17.09 5h-6.3l-1.7 4.5 4.3 2.5 3.7-7zM7 5H3.5c-.3 0-.5.2-.5.5v3c0 .3.2.5.5.5H7V5zm10 14h3.5c.3 0 .5-.2.5-.5v-3c0-.3-.2-.5-.5-.5H17V19zM7 19v-4H3.5c-.3 0-.5.2-.5.5v3c0 .3.2.5.5.5H7zm5-7.5l-4.3-2.5L7 5h6.3l1.7 4.5-4.3 2.5z'/%3E%3C/svg%3E"); }
-  .eye { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f8c8d'%3E%3Cpath d='M12 6.5c-3.79 0-7.17 2.13-8.82 5.5 1.65 3.37 5.02 5.5 8.82 5.5s7.17-2.13 8.82-5.5C19.17 8.63 15.79 6.5 12 6.5zm0 10c-2.48 0-4.5-2.02-4.5-4.5S9.52 7.5 12 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z'/%3E%3Ccircle cx='12' cy='12' r='2.5'/%3E%3C/svg%3E"); }
-  .user { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f8c8d'%3E%3Cpath d='M12 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E"); }
-  .post { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f8c8d'%3E%3Cpath d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/%3E%3C/svg%3E"); }
 </style>
 
 <script>
