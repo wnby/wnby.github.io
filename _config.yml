@@ -1,6 +1,5 @@
-name: "无隅之境"
+name: "地动空间"
 description: "BUPT人工智能学院在读"
-"求之不得，往往不求而得"
 avatar: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/0.png
 favicon: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/favicon.ico
 
@@ -18,7 +17,7 @@ footer-links:
   email:  
   zhihu: 
 
-footer-text: "©  无隅之境 | 无限进步"
+footer-text: "©  去怀疑 | 去相信"
 
 # Gitalk配置（保持不变）
 gitalk:
