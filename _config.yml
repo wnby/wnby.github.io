@@ -1,57 +1,111 @@
-name: "地动空间"
-description: "wnby的个人博客"
-avatar: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/0.png
-favicon: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/favicon.ico
+<header class="site-header">
+  <div class="title-container">
+    <h1 class="site-title">地动空间</h1>
+    
+    <!-- 添加About Me信息 -->
+    <div class="about-me-info">
+      <div>BUPT人工智能学院研-1</div>
+      <div class="research-area">📖多模态大模型·计算机视觉</div>
+      <div class="hobbies">
+        <span class="hobby-icon">🎮</span>云顶之奕·实况足球
+        <span class="hobby-icon">⚽️</span>巴萨·黑龙江冰城
+        <span class="hobby-icon">🏀</span>开拓者
+      </div>
+    </div>
+    
+    <p class="site-subtitle">wnby的个人博客</p>
+  </div>
 
-# 精简导航栏
-navigation:
-  - name: 首页
-    url: /
-  - name: 文章
-    url: /archive
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-link">首页</a>
+      <a href="/archive" class="nav-link">文章</a>
+    </div>
+  </nav>
+</header>
 
-
-# 页脚只保留关键社交链接
-footer-links:
-  github: wnby
-  email:  
-  zhihu: 
-
-footer-text: "©  去怀疑 | 去相信"
-
-# Gitalk配置（保持不变）
-gitalk:
-  clientID: Ov23liLSRFxmsHvoK9iz
-  clientSecret: d2c0cb2d55fe631c21e9420fc7d035a102ad56bc
-  repo: wnby.github.io
-  owner: wnby
-
-url: https://wnby.github.io
-
-# ===== 以下技术配置保持不变 =====
-paginate: 8
-excerpt_separator: <!-- more -->
-permalink: /:title/
-paginate_path: /page:num/
-version: v1.2.0
-
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: 'highlight'
-
-sass:
-  style: :expanded
-
-plugins:
-  - jekyll-sitemap
-  - jekyll-feed
-  - jekyll-paginate
-
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - LICENSE
-  - README.md
-  - CNAME
+<style>
+  .site-header {
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 25px;
+  }
+  
+  .title-container {
+    margin-bottom: 20px;
+  }
+  
+  .site-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #000;
+    margin: 10px 0;
+  }
+  
+  .about-me-info {
+    margin: 15px 0;
+    font-size: 1.15rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .research-area {
+    margin: 8px 0;
+    font-weight: 500;
+  }
+  
+  .hobbies {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 12px;
+  }
+  
+  .hobby-icon {
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  
+  .site-subtitle {
+    font-size: 1.1rem;
+    color: #777;
+    margin: 5px 0;
+  }
+  
+  .navbar {
+    margin-top: 15px;
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+  
+  .nav-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.2rem;
+    position: relative;
+  }
+  
+  .nav-link:hover {
+    color: #2c3e50;
+  }
+  
+  .nav-link:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #3498db;
+    transition: width 0.3s;
+  }
+  
+  .nav-link:hover:after {
+    width: 100%;
+  }
+</style>
