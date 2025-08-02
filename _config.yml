@@ -1,9 +1,10 @@
-name: "感知奇点"
+name: "无隅之境"
 description: "BUPT人工智能学院在读"
+"求之不得，往往不求而得"
 avatar: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/0.png
 favicon: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/favicon.ico
 
-# 精简导航栏（5项核心功能）
+# 精简导航栏
 navigation:
   - name: 首页
     url: /
@@ -17,7 +18,7 @@ footer-links:
   email:  
   zhihu: 
 
-footer-text: "© 2025 感知奇点 | 多模态研究日志"
+footer-text: "©  无隅之境 | 无限进步"
 
 # Gitalk配置（保持不变）
 gitalk:
