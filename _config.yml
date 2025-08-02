@@ -3,7 +3,7 @@
     <h1 class="site-title">地动空间</h1>
     
     <!-- 添加About Me信息 -->
-    <div class="about-me-info">
+    <div class="about-me">
       <div>BUPT人工智能学院研-1</div>
       <div class="research-area">📖多模态大模型·计算机视觉</div>
       <div class="hobbies">
