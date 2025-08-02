@@ -42,7 +42,7 @@
     margin: 10px 0;
   }
   
-  .about-me-info {
+  .about-me {
     margin: 15px 0;
     font-size: 1.15rem;
     color: #555;
