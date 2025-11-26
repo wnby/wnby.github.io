@@ -7,8 +7,6 @@ favicon: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/favico
 navigation:
   - name: 首页
     url: /
-  - name: 文章
-    url: /archive
   - name: 论文精读
     url: /papers
   - name: 横向项目
@@ -19,8 +17,6 @@ navigation:
     url: /algorithm
   - name: 摄影记录
     url: /photography
-  - name: about me  
-    url: /about
 
 # 页脚只保留关键社交链接
 footer-links:
