@@ -9,6 +9,16 @@ navigation:
     url: /
   - name: 文章
     url: /archive
+  - name: 论文精读
+    url: /papers
+  - name: 横向项目
+    url: /industry
+  - name: 个人项目
+    url: /projects
+  - name: 算法刷题
+    url: /algorithm
+  - name: 摄影记录
+    url: /photography
   - name: about me  
     url: /about
 
