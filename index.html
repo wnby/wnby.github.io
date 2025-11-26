@@ -3,480 +3,539 @@ layout: default
 ---
 
 <div class="home-container">
-  <!-- 实时时钟显示 -->
-  <div class="real-time-clock">
-    <div id="current-date">2025年8月2日</div>
-    <div id="current-time">00:00:00</div>
-  </div>
+  
+  <!-- 1. 头部欢迎区：极简风格 + 实时时钟 -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="greeting">你好，我是 WNBY <span class="wave">👋</span></h1>
+      <p class="bio">这里是我的数字花园。记录论文阅读、项目实战与生活瞬间。</p>
+    </div>
+    <div class="clock-widget">
+      <div id="current-time">00:00</div>
+      <div id="current-date">2025-08-02</div>
+    </div>
+  </section>
 
-  <!-- 搜索框 -->
-  <div class="search-container">
-    <input type="text" id="search-input" placeholder="搜索博客文章...">
+  <!-- 2. 搜索框：悬浮质感 -->
+  <div class="search-wrapper">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="搜索文章、笔记或灵感...">
+    </div>
     <ul id="results-container"></ul>
   </div>
 
-  <!-- 最新文章区域 -->
-  <div class="latest-post-section">
-    <div class="section-header">
-      <h2>最新文章</h2>
-      <div class="new-badge">NEW</div>
-    </div>
-    
-    {% assign latest_post = site.posts.first %}
-    <article class="post">
-      <div class="post-header">
-        <h1>
-          <a href="{{ site.baseurl }}{{ latest_post.url }}">{{ latest_post.title }}</a>
-        </h1>
-      </div>
-      
-      <div class="post-footer">
-        <a href="{{ site.baseurl }}{{ latest_post.url }}" class="read-more">
-          阅读全文
-        </a>
-      </div>
-    </article>
-    
-    <!-- 所有文章链接 -->
-    <div class="all-posts-link">
-      <a href="/archive">查看所有文章</a>
-    </div>
-  </div>
-
-  <!-- 特色区域 -->
-  <div class="features">
-    <div class="feature-box">
-      <h3>摄影计划</h3>
-      <p>2025.9-2025.10，计划去河北，河南两个省</p>
-      <ul>
-        <li>郑州，洛阳，开封</li>
-        <li>秦皇岛</li>
-      </ul>
-      <div class="countdown">
-        <div>距离计划开始还有</div>
-        <div class="countdown-timer">
-          <span id="countdown-days">29</span>天 
-          <span id="countdown-hours">4</span>时 
-          <span id="countdown-minutes">15</span>分
+  <!-- 3. 核心模块导航：卡片矩阵 -->
+  <section class="modules-section">
+    <h2 class="section-title">探索内容</h2>
+    <div class="module-grid">
+      <!-- 论文精读 -->
+      <a href="{{ site.baseurl }}/papers" class="module-card card-papers">
+        <div class="card-icon-bg">📄</div>
+        <div class="card-info">
+          <h3>论文精读</h3>
+          <p>前沿论文笔记与深度思考</p>
         </div>
-      </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <!-- 横向项目 -->
+      <a href="{{ site.baseurl }}/industry" class="module-card card-industry">
+        <div class="card-icon-bg">💼</div>
+        <div class="card-info">
+          <h3>横向项目</h3>
+          <p>企业合作与工程落地实战</p>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <!-- 个人项目 -->
+      <a href="{{ site.baseurl }}/projects" class="module-card card-projects">
+        <div class="card-icon-bg">🛠️</div>
+        <div class="card-info">
+          <h3>个人项目</h3>
+          <p>独立开发的有趣应用与Demo</p>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <!-- 算法刷题 -->
+      <a href="{{ site.baseurl }}/algorithm" class="module-card card-algorithm">
+        <div class="card-icon-bg">💻</div>
+        <div class="card-info">
+          <h3>算法刷题</h3>
+          <p>LeetCode 解题思路汇总</p>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <!-- 摄影记录 -->
+      <a href="{{ site.baseurl }}/photography" class="module-card card-photo">
+        <div class="card-icon-bg">📷</div>
+        <div class="card-info">
+          <h3>摄影记录</h3>
+          <p>用镜头捕捉生活的光影</p>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 4. 最新动态：简洁列表 -->
+  <section class="latest-section">
+    <div class="section-header">
+      <h2 class="section-title">最新动态 <span class="badge-new">NEW</span></h2>
+      <a href="{{ site.baseurl }}/archive" class="view-all">查看归档</a>
     </div>
     
-    <div class="feature-box">
-      <h3>研究兴趣</h3>
-      <ul>
-        <li>多模态大模型</li>
-        <li>计算机视觉</li>
-        <li>检索增强生成</li>
-      </ul>
+    <div class="post-list-modern">
+      {% for post in site.posts limit:5 %}
+      <article class="post-item">
+        <div class="post-meta-date">
+          <span class="day">{{ post.date | date: "%d" }}</span>
+          <span class="month">{{ post.date | date: "%b" }}</span>
+        </div>
+        <div class="post-content">
+          <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+          <div class="post-tags">
+            {% for tag in post.tags limit:3 %}
+            <span class="tag">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- 5. 底部统计 -->
+  <div class="footer-stats">
+    <div class="stat-pill">
+      <span class="dot"></span> 访客: <span id="busuanzi_value_site_uv">--</span>
+    </div>
+    <div class="stat-pill">
+      <span class="dot"></span> 访问: <span id="busuanzi_value_site_pv">--</span>
+    </div>
+    <div class="stat-pill">
+      <span class="dot"></span> 文章: {{ site.posts.size }}
     </div>
   </div>
-</div>
 
-<!-- 访问统计 -->
-<div class="stats-container">
-  <div class="stat-item">
-    <span id="busuanzi_value_site_pv">0</span>次访问
-  </div>
-  <div class="stat-item">
-    <span id="busuanzi_value_site_uv">0</span>位访客
-  </div>
-  <div class="stat-item">
-    {{ site.posts.size }}篇文章
-  </div>
 </div>
 
 <style>
-  /* 基础样式重置 */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  /* === 全局重置与基础样式 === */
+  :root {
+    --primary-color: #3498db;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-main: #2c3e50;
+    --text-sub: #7f8c8d;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+    --radius-lg: 16px;
+    --radius-md: 10px;
   }
-  
-  /* 设置纯白色背景 */
+
   body {
-    background-color: #ffffff;
-    color: #333333;
-    line-height: 1.6;
+    background-color: var(--bg-color);
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text-main);
   }
-  
-  /* 整体容器 */
+
   .home-container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 30px 20px;
+    padding: 40px 20px;
   }
-  
-  /* 实时时钟 */
-  .real-time-clock {
-    text-align: right;
-    margin-bottom: 25px;
-    font-size: 0.9rem;
-    color: #666666;
-    padding: 8px 12px;
-    background: #f8f9fa;
-    border-radius: 6px;
-  }
-  
-  #current-date {
-    font-weight: 500;
-  }
-  
-  #current-time {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #3498db;
-    letter-spacing: 1px;
-  }
-  
-  /* 搜索框 */
-  .search-container {
-    margin: 25px 0 35px;
-  }
-  
-  #search-input {
-    width: 100%;
-    height: 48px;
-    padding: 0 20px;
-    font-size: 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    background: #f8f9fa;
-    font-weight: 500;
-  }
-  
-  #search-input:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-  }
-  
-  /* 最新文章区域 */
-  .latest-post-section {
-    margin-bottom: 45px;
-    background: white;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
-  }
-  
-  .section-header {
+
+  /* === 1. Hero Section === */
+  .hero-section {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 15px 25px;
-    background: #f8f9fa;
-    color: #2c3e50;
-    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 40px;
   }
-  
-  .section-header h2 {
-    flex-grow: 1;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  
-  .new-badge {
-    background: #e74c3c;
-    color: white;
-    padding: 3px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: bold;
-  }
-  
-  .post {
-    padding: 28px;
-  }
-  
-  .post-header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #2c3e50;
-  }
-  
-  .post-header h1 a {
-    color: #2c3e50;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .post-header h1 a:hover {
-    color: #3498db;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
-  
-  .read-more {
-    display: inline-block;
-    padding: 10px 24px;
-    background: #3498db;
-    color: white;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-    margin-top: 15px;
-  }
-  
-  .read-more:hover {
-    background: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .all-posts-link {
-    padding: 18px 25px;
-    text-align: center;
-    border-top: 1px solid #f1f1f1;
-    background: #fafafa;
-  }
-  
-  .all-posts-link a {
-    color: #3498db;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.05rem;
-  }
-  
-  .all-posts-link a:hover {
-    text-decoration: underline;
-  }
-  
-  /* 特色区域 */
-  .features {
-    display: flex;
-    gap: 28px;
-    margin: 45px 0;
-  }
-  
-  .feature-box {
-    flex: 1;
-    padding: 28px;
-    background: white;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
-  }
-  
-  .feature-box h3 {
-    color: #2c3e50;
-    padding-bottom: 12px;
-    margin-bottom: 18px;
-    font-size: 1.35rem;
-    border-bottom: 2px solid #f1f1f1;
-    font-weight: 600;
-  }
-  
-  .feature-box p {
-    color: #555;
-    margin-bottom: 15px;
-    line-height: 1.7;
-    font-size: 1.05rem;
-  }
-  
-  .feature-box ul {
-    list-style: none;
-    margin-bottom: 22px;
-  }
-  
-  .feature-box ul li {
-    padding: 10px 0;
-    border-bottom: 1px solid #f5f5f5;
-    font-size: 1.05rem;
-    position: relative;
-    padding-left: 22px;
-  }
-  
-  .feature-box ul li:before {
-    content: "•";
-    color: #3498db;
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-    top: 9px;
-    font-size: 1.2rem;
-  }
-  
-  .feature-box ul li:last-child {
-    border-bottom: none;
-  }
-  
-  .countdown {
-    background: #f5f8fd;
-    padding: 18px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid #e3edff;
-    margin-top: 15px;
-  }
-  
-  .countdown > div {
-    font-size: 0.95rem;
-    color: #5d7ca6;
+
+  .greeting {
+    font-size: 2rem;
+    font-weight: 700;
     margin-bottom: 8px;
+    color: var(--text-main);
   }
-  
-  .countdown-timer {
+
+  .wave {
+    display: inline-block;
+    animation: wave 2.5s infinite;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes wave {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  .bio {
+    color: var(--text-sub);
+    font-size: 1.05rem;
+  }
+
+  .clock-widget {
+    text-align: right;
+    background: var(--card-bg);
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #eaeaea;
+  }
+
+  #current-time {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #2c3e50;
-    letter-spacing: 1px;
-    display: flex;
-    justify-content: center;
-    gap: 5px;
+    color: var(--primary-color);
+    font-family: monospace;
   }
-  
-  .countdown-timer span {
-    min-width: 45px;
-    display: inline-block;
-    background: #2c3e50;
-    color: white;
-    padding: 2px 5px;
-    border-radius: 5px;
-    text-align: center;
+
+  #current-date {
+    font-size: 0.85rem;
+    color: var(--text-sub);
   }
-  
-  /* 统计区域 */
-  .stats-container {
+
+  /* === 2. Search Box === */
+  .search-wrapper {
+    position: relative;
+    margin-bottom: 50px;
+  }
+
+  .search-box {
     display: flex;
-    justify-content: center;
-    gap: 35px;
-    padding: 25px;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 15px 20px;
+    border-radius: 50px;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+  }
+
+  .search-box:focus-within {
+    transform: translateY(-2px);
+  }
+
+  .search-icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    opacity: 0.6;
+  }
+
+  #search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    color: var(--text-main);
+  }
+
+  #results-container {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
     background: white;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
-    margin-top: 10px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    list-style: none;
+    z-index: 100;
+    padding: 10px 0;
+    display: none; /* JS控制显示 */
   }
   
-  .stat-item {
-    font-size: 1.05rem;
-    color: #555;
-    font-weight: 500;
+  #results-container:not(:empty) {
+    display: block;
+  }
+
+  #results-container li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  #results-container li:last-child {
+    border-bottom: none;
+  }
+
+  #results-container a {
+    color: var(--text-main);
+    text-decoration: none;
+    display: block;
+  }
+  
+  #results-container a:hover {
+    color: var(--primary-color);
+  }
+
+  /* === 3. Module Grid (核心) === */
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 15px;
+  }
+
+  .section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 3px;
+  }
+
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 50px;
+  }
+
+  .module-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    text-decoration: none;
+    color: var(--text-main);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+  }
+
+  .module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(52, 152, 219, 0.3);
+  }
+
+  .card-icon-bg {
+    width: 50px;
+    height: 50px;
+    background: #f0f7ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+
+  .card-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .card-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-sub);
+  }
+
+  .card-arrow {
+    margin-left: auto;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+
+  .module-card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* 个性化卡片颜色微调 */
+  .card-papers .card-icon-bg { background: #e8f4fd; color: #3498db; }
+  .card-industry .card-icon-bg { background: #fff4e6; color: #e67e22; }
+  .card-projects .card-icon-bg { background: #eafaf1; color: #2ecc71; }
+  .card-algorithm .card-icon-bg { background: #f4ecf7; color: #9b59b6; }
+  .card-photo .card-icon-bg { background: #fdebd0; color: #f1c40f; }
+
+  /* === 4. Latest Posts === */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .badge-new {
+    background: #e74c3c;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+
+  .view-all {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .post-list-modern {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 10px 0;
+  }
+
+  .post-item {
+    display: flex;
+    padding: 20px 25px;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background 0.2s;
+  }
+
+  .post-item:last-child {
+    border-bottom: none;
+  }
+
+  .post-item:hover {
+    background: #fafafa;
+  }
+
+  .post-meta-date {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    background: #f1f2f6;
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    flex-shrink: 0;
+    color: var(--text-sub);
   }
-  
-  .stat-item span {
+
+  .post-meta-date .day {
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #2c3e50;
-    font-size: 1.3rem;
-    margin-top: 5px;
+    color: var(--text-main);
+    line-height: 1;
   }
-  
-  /* 响应式设计 */
+
+  .post-meta-date .month {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .post-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.05rem;
+  }
+
+  .post-content h3 a {
+    color: var(--text-main);
+    text-decoration: none;
+  }
+
+  .post-content h3 a:hover {
+    color: var(--primary-color);
+  }
+
+  .post-tags .tag {
+    font-size: 0.8rem;
+    color: #95a5a6;
+    margin-right: 10px;
+  }
+
+  /* === 5. Footer Stats === */
+  .footer-stats {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 50px;
+    color: var(--text-sub);
+    font-size: 0.9rem;
+  }
+
+  .stat-pill {
+    background: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  /* 响应式适配 */
   @media (max-width: 768px) {
-    .home-container {
-      padding: 20px 15px;
-    }
-    
-    .features {
+    .hero-section {
       flex-direction: column;
-      gap: 25px;
+      align-items: flex-start;
+      gap: 20px;
     }
     
-    .section-header {
-      padding: 12px 20px;
+    .clock-widget {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      box-sizing: border-box;
     }
-    
-    .post {
-      padding: 22px;
-    }
-    
-    .stats-container {
-      flex-direction: column;
-      gap: 18px;
-      padding: 20px;
-    }
-    
-    .stat-item {
-      flex-direction: row;
-      gap: 8px;
-      align-items: baseline;
-    }
-    
-    .stat-item span {
-      margin-top: 0;
+
+    .module-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
 
-<script>
-  // 实时时钟功能
-  function updateClock() {
-    const now = new Date();
-    
-    // 格式化日期
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
-    const day = now.getDate();
-    const dateStr = `${year}年${month}月${day}日`;
-    
-    // 格式化时间
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    const timeStr = `${hours}:${minutes}:${seconds}`;
-    
-    // 更新页面元素
-    document.getElementById('current-date').textContent = dateStr;
-    document.getElementById('current-time').textContent = timeStr;
-  }
-  
-  // 摄影计划倒计时
-  function updateCountdown() {
-    const targetDate = new Date('2025-09-01T00:00:00');
-    const now = new Date();
-    const diff = targetDate - now;
-    
-    if (diff <= 0) {
-      document.querySelector('.countdown').innerHTML = '<div>摄影计划已开始</div>';
-      return;
-    }
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    
-    document.getElementById('countdown-days').textContent = days;
-    document.getElementById('countdown-hours').textContent = hours;
-    document.getElementById('countdown-minutes').textContent = minutes;
-  }
-  
-  // 初始化
-  document.addEventListener('DOMContentLoaded', function() {
-    // 初始化时钟
-    updateClock();
-    setInterval(updateClock, 1000);
-    
-    // 初始化倒计时
-    updateCountdown();
-    setInterval(updateCountdown, 60000);
-    
-    // 设置静态数据（示例）
-    document.querySelector('.stat-item:first-child span').textContent = '128';
-    document.querySelector('.stat-item:nth-child(2) span').textContent = '56';
-  });
-</script>
-
-<!-- 保留搜索功能脚本 -->
 <script src="{{ site.baseurl }}/js/simple-jekyll-search.min.js"></script>
 <script>
+  // 1. 实时时钟逻辑
+  function updateClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('zh-CN', { hour12: false });
+    const dateStr = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+    
+    document.getElementById('current-time').textContent = timeStr;
+    document.getElementById('current-date').textContent = dateStr;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // 2. 搜索功能初始化
   window.simpleJekyllSearch = new SimpleJekyllSearch({
     searchInput: document.getElementById('search-input'),
     resultsContainer: document.getElementById('results-container'),
     json: '{{ site.baseurl }}/search.json',
-    searchResultTemplate: '<li><a href="{url}?query={query}" title="{desc}">{title}</a></li>',
-    noResultsText: '未找到相关文章',
+    searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+    noResultsText: '<li style="color:#999;text-align:center">没有找到相关文章</li>',
     limit: 10,
-    fuzzy: false,
-    exclude: ['Welcome']
-  })
+    fuzzy: false
+  });
 </script>
