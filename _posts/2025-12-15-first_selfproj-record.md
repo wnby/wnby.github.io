@@ -10,8 +10,8 @@ tags: [效率工具, 极简主义]
 
 > **"Less is More."** 
 
-![alt text](image-7.png)
-![alt text](image-8.png)
+![TaskDock截图1](/wnby.github.io/images/taskdock/image-7.png)
+![TaskDock截图2](/wnby.github.io/images/taskdock/image-8.png)
 
 ## 为什么做这个？
 
