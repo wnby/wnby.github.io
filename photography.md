@@ -4,7 +4,6 @@ title: 摄影记录
 permalink: /photography/
 ---
 
-光影瞬间。
 
 <div class="photography-list">
 {% for post in site.categories.photography %}

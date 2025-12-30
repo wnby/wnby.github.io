@@ -4,8 +4,6 @@ title: 算法刷题
 permalink: /algorithm/
 ---
 
-LeetCode 及算法竞赛解题记录。
-
 <ul class="post-list">
 {% for post in site.categories.algorithm %}
   <li>

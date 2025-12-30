@@ -4,7 +4,6 @@ title: 个人项目
 permalink: /projects/
 ---
 
-这里展示我个人开发的有趣项目。
 
 <ul class="post-list">
 {% for post in site.categories.projects %}
