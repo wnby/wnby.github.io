@@ -25,73 +25,20 @@ layout: default
     <ul id="results-container"></ul>
   </div>
 
-  <!-- === 核心布局：左右分栏 === -->
-  <div class="content-split-layout">
+  <!-- === 核心布局：单栏时间轴 (修改后) === -->
+  <div class="timeline-layout">
     
-    <!-- 3. 左侧：核心模块导航 (竖排) -->
-    <aside class="sidebar-modules">
-      <h2 class="section-title">探索内容</h2>
-      <div class="module-list">
-        <!-- 论文精读 -->
-        <a href="{{ site.baseurl }}/papers" class="module-card card-papers">
-          <div class="card-icon-bg">📄</div>
-          <div class="card-info">
-            <h3>论文精读</h3>
-            <p>论文笔记与深度思考</p>
-          </div>
-          <div class="card-arrow">→</div>
-        </a>
+    <!-- 移除侧边栏 aside class="sidebar-modules" -->
 
-        <!-- 横向项目 -->
-        <a href="{{ site.baseurl }}/industry" class="module-card card-industry">
-          <div class="card-icon-bg">💼</div>
-          <div class="card-info">
-            <h3>横向项目</h3>
-            <p>实验室横向项目</p>
-          </div>
-          <div class="card-arrow">→</div>
-        </a>
-
-        <!-- 个人项目 -->
-        <a href="{{ site.baseurl }}/projects" class="module-card card-projects">
-          <div class="card-icon-bg">🛠️</div>
-          <div class="card-info">
-            <h3>个人项目</h3>
-            <p>独立开发的有趣应用</p>
-          </div>
-          <div class="card-arrow">→</div>
-        </a>
-
-        <!-- 算法刷题 -->
-        <a href="{{ site.baseurl }}/algorithm" class="module-card card-algorithm">
-          <div class="card-icon-bg">💻</div>
-          <div class="card-info">
-            <h3>算法刷题</h3>
-            <p>LeetCode 解题思路</p>
-          </div>
-          <div class="card-arrow">→</div>
-        </a>
-
-        <!-- 摄影记录 -->
-        <a href="{{ site.baseurl }}/photography" class="module-card card-photo">
-          <div class="card-icon-bg">📷</div>
-          <div class="card-info">
-            <h3>摄影记录</h3>
-            <p>光影瞬间记录</p>
-          </div>
-          <div class="card-arrow">→</div>
-        </a>
-      </div>
-    </aside>
-
-    <!-- 4. 右侧：最新动态 (宽大) -->
-    <main class="main-feed">
+    <!-- 主内容区域 (全宽) -->
+    <main class="main-feed-full">
       <div class="section-header">
-        <h2 class="section-title">最新动态 <span class="badge-new">NEW</span></h2>
+        <h2 class="section-title">所有文章</h2>
       </div>
       
       <div class="post-list-modern">
-        {% for post in site.posts limit:8 %}
+        <!-- 去除了 limit:8 限制，显示所有文章 -->
+        {% for post in site.posts %}
         <article class="post-item">
           <div class="post-meta-date">
             <span class="day">{{ post.date | date: "%d" }}</span>
@@ -136,7 +83,7 @@ layout: default
   }
   
   .home-container {
-    max-width: 1100px; /* 加宽以容纳左右布局 */
+    max-width: 1100px;
     margin: 0 auto;
     padding: 50px 20px;
     animation: fadeIn 0.8s ease-out;
@@ -152,116 +99,43 @@ layout: default
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
     --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
     --radius-lg: 16px;
-    --radius-md: 10px;
   }
 
-  body {
-    background-color: var(--bg-color);
-    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    color: var(--text-main);
-    background-image: radial-gradient(#e1e1e1 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-
-  /* === 动画定义 === */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes slideInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* 动画定义 */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
   /* === 1. Hero Section === */
   .hero-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-    animation: slideInLeft 0.8s ease-out;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 60px; padding: 0 10px;
   }
+  .greeting { font-size: 2rem; font-weight: 700; color: var(--text-main); margin: 0; }
+  .wave { display: inline-block; animation: wave 2s infinite; transform-origin: 70% 70%; }
+  @keyframes wave { 0% { transform: rotate(0deg); } 10% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 30% { transform: rotate(14deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } 60% { transform: rotate(0deg); } 100% { transform: rotate(0deg); } }
+  .bio { font-size: 1.1rem; color: var(--text-sub); margin-top: 10px; font-weight: 300; }
 
-  .greeting {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--text-main);
-  }
-
-  .wave {
-    display: inline-block;
-    animation: wave 2.5s infinite;
-    transform-origin: 70% 70%;
-  }
-  @keyframes wave {
-    0% { transform: rotate(0deg); }
-    10% { transform: rotate(14deg); }
-    20% { transform: rotate(-8deg); }
-    30% { transform: rotate(14deg); }
-    40% { transform: rotate(-4deg); }
-    50% { transform: rotate(10deg); }
-    60% { transform: rotate(0deg); }
-    100% { transform: rotate(0deg); }
-  }
-
-  .bio {
-    color: var(--text-sub);
-    font-size: 1.1rem;
-  }
-
+  /* 时钟组件 */
   .clock-widget {
-    text-align: right;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 15px 25px;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid rgba(255,255,255,0.5);
-    transition: transform 0.3s;
+    text-align: right; font-family: 'Courier New', monospace; color: var(--text-main);
   }
-  .clock-widget:hover { transform: scale(1.02); }
+  #current-time { font-size: 2.5rem; font-weight: 700; line-height: 1; letter-spacing: -2px; }
+  #current-date { font-size: 0.9rem; color: var(--text-sub); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
 
-  #current-time {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    font-family: 'Courier New', monospace;
-  }
-  #current-date { font-size: 0.9rem; color: var(--text-sub); margin-top: 4px; }
-
-  /* === 2. Search Box === */
-  .search-wrapper {
-    position: relative;
-    margin-bottom: 50px;
-    animation: fadeIn 1s ease-out 0.2s backwards;
-  }
-
+  /* === 2. 搜索框样式 === */
+  .search-wrapper { position: relative; max-width: 600px; margin: 0 auto 60px; z-index: 10; }
   .search-box {
-    display: flex;
-    align-items: center;
-    background: var(--card-bg);
-    padding: 18px 25px;
-    border-radius: 50px;
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s;
-    border: 2px solid transparent;
+    position: relative; background: white; border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; padding: 15px 25px;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
-  .search-box:focus-within {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    border-color: rgba(52, 152, 219, 0.3);
+  .search-box:hover, .search-box:focus-within { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+  .search-icon { font-size: 1.2rem; color: #ccc; margin-right: 15px; }
+  #search-input {
+    border: none; outline: none; flex: 1; font-size: 1rem; color: var(--text-main); background: transparent;
   }
-  .search-icon { font-size: 1.3rem; margin-right: 15px; opacity: 0.5; }
-  #search-input { border: none; outline: none; width: 100%; font-size: 1.05rem; background: transparent; }
-
   #results-container {
-    position: absolute; top: 60px; left: 0; right: 0;
-    background: white; border-radius: var(--radius-md);
+    position: absolute; top: 110%; left: 0; width: 100%; background: white; border-radius: 12px;
     box-shadow: var(--shadow-md); list-style: none; z-index: 100;
     padding: 10px 0; display: none;
   }
@@ -270,26 +144,15 @@ layout: default
   #results-container a { color: var(--text-main); text-decoration: none; display: block; }
   #results-container a:hover { color: var(--primary-color); }
 
-  /* === 3. 左右分栏布局 (核心修改) === */
-  .content-split-layout {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start; /* 顶部对齐 */
-    margin-bottom: 60px;
+  /* === 3. 单栏布局 (修改后) === */
+  .timeline-layout {
+    max-width: 800px; /* 限制列表宽度，提高阅读体验 */
+    margin: 0 auto 60px;
   }
 
-  /* 左侧边栏 */
-  .sidebar-modules {
-    width: 280px; /* 固定宽度，较小 */
-    flex-shrink: 0;
-    animation: slideInLeft 0.8s ease-out 0.4s backwards;
-  }
-
-  /* 右侧主内容 */
-  .main-feed {
-    flex: 1; /* 占据剩余空间，较大 */
-    min-width: 0; /* 防止内容溢出 */
-    animation: slideInUp 0.8s ease-out 0.6s backwards;
+  .main-feed-full {
+    width: 100%;
+    animation: slideInUp 0.8s ease-out 0.4s backwards;
   }
 
   .section-title {
@@ -305,54 +168,6 @@ layout: default
     width: 5px; height: 20px; background: var(--primary-color); border-radius: 3px;
   }
 
-  /* 模块列表 (竖排) */
-  .module-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .module-card {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    padding: 15px 20px; /* 紧凑内边距 */
-    text-decoration: none;
-    color: var(--text-main);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    border: 1px solid transparent;
-  }
-
-  .module-card:hover {
-    transform: translateX(5px); /* 向右微动 */
-    box-shadow: var(--shadow-md);
-    border-color: rgba(52, 152, 219, 0.3);
-  }
-
-  .card-icon-bg {
-    width: 45px; height: 45px; /* 缩小图标 */
-    background: #f0f7ff; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; margin-right: 15px; flex-shrink: 0;
-  }
-
-  .card-info h3 { margin: 0 0 4px 0; font-size: 1rem; font-weight: 600; }
-  .card-info p { margin: 0; font-size: 0.8rem; color: var(--text-sub); }
-
-  .card-arrow {
-    margin-left: auto; opacity: 0; transform: translateX(-10px);
-    transition: all 0.3s ease; color: var(--primary-color); font-weight: bold;
-  }
-  .module-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
-
-  /* 卡片颜色 */
-  .card-papers .card-icon-bg { background: #e8f4fd; color: #3498db; }
-  .card-industry .card-icon-bg { background: #fff4e6; color: #e67e22; }
-  .card-projects .card-icon-bg { background: #eafaf1; color: #2ecc71; }
-  .card-algorithm .card-icon-bg { background: #f4ecf7; color: #9b59b6; }
-  .card-photo .card-icon-bg { background: #fdebd0; color: #f1c40f; }
 
   /* === 4. 右侧文章列表 === */
   .badge-new {
@@ -389,6 +204,7 @@ layout: default
   .post-meta-date .month { font-size: 0.7rem; text-transform: uppercase; }
 
   .post-content { flex: 1; }
+  
   .post-content h3 { margin: 0 0 8px 0; font-size: 1.15rem; }
   .post-content h3 a { color: var(--text-main); text-decoration: none; }
   .post-content h3 a:hover { color: var(--primary-color); }
@@ -416,12 +232,6 @@ layout: default
 
   /* 响应式适配 */
   @media (max-width: 850px) {
-    .content-split-layout {
-      flex-direction: column; /* 手机端变回上下排列 */
-    }
-    .sidebar-modules {
-      width: 100%;
-    }
     .hero-section {
       flex-direction: column; align-items: flex-start; gap: 20px;
     }
