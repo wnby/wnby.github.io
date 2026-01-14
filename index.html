@@ -16,7 +16,7 @@ layout: default
     </div>
   </section>
 
-  <!-- 2. 搜索框：悬浮质感 -->
+  <!-- 2. 搜索框：保持不变 -->
   <div class="search-wrapper">
     <div class="search-box">
       <span class="search-icon">🔍</span>
@@ -25,38 +25,82 @@ layout: default
     <ul id="results-container"></ul>
   </div>
 
-  <!-- === 核心布局：单栏时间轴 (修改后) === -->
-  <div class="timeline-layout">
+  <!-- === 核心布局：双栏学习与生活 (New) === -->
+  <div class="dual-layout">
     
-    <!-- 移除侧边栏 aside class="sidebar-modules" -->
-
-    <!-- 主内容区域 (全宽) -->
-    <main class="main-feed-full">
-      <div class="section-header">
-        <h2 class="section-title">所有文章</h2>
-      </div>
+    <!-- 左侧：学习栏目 -->
+    <div class="column study-column">
+      <h2 class="main-title">📚 学习</h2>
       
-      <div class="post-list-modern">
-        <!-- 去除了 limit:8 限制，显示所有文章 -->
-        {% for post in site.posts %}
-        <article class="post-item">
-          <div class="post-meta-date">
-            <span class="day">{{ post.date | date: "%d" }}</span>
-            <span class="month">{{ post.date | date: "%b" }}</span>
+      <!-- 子版块 1: Python基础 -->
+      <section class="sub-section">
+        <h3 class="sub-title"><span class="icon">🐍</span> Python 基础</h3>
+        <ul class="minimal-list">
+          {% assign python_posts = site.categories.python | default: site.categories.Python %}
+          {% for post in python_posts limit:5 %}
+          <li>
+            <span class="date">{{ post.date | date: "%m-%d" }}</span>
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          </li>
+          {% else %}
+          <li class="empty-tip">暂无文章 (请在文章头部添加 category: python)</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <!-- 子版块 2: LeetCode刷题 -->
+      <section class="sub-section">
+        <h3 class="sub-title"><span class="icon">💻</span> LeetCode 刷题</h3>
+        <ul class="minimal-list">
+          {% assign leetcode_posts = site.categories.leetcode | default: site.categories.LeetCode %}
+          {% for post in leetcode_posts limit:5 %}
+          <li>
+            <span class="date">{{ post.date | date: "%m-%d" }}</span>
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          </li>
+          {% else %}
+          <li class="empty-tip">暂无文章 (Category: leetcode)</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <!-- 子版块 3: 算法学习 -->
+      <section class="sub-section">
+        <h3 class="sub-title"><span class="icon">🧮</span> 算法学习</h3>
+        <ul class="minimal-list">
+          {% assign algo_posts = site.categories.algorithm | default: site.categories.Algorithm %}
+          {% for post in algo_posts limit:5 %}
+          <li>
+            <span class="date">{{ post.date | date: "%m-%d" }}</span>
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          </li>
+          {% else %}
+          <li class="empty-tip">暂无文章 (Category: algorithm)</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+
+    <!-- 右侧：生活随笔 -->
+    <div class="column life-column">
+      <h2 class="main-title">☕ 生活随笔</h2>
+      
+      <div class="life-feed">
+        <!-- 包含 categories: life, 随笔, 随便写写, photography -->
+        {% assign life_posts = site.categories.life | default: site.categories['随便写写'] %}
+        {% for post in life_posts %}
+        <article class="life-item">
+          <div class="life-meta">
+            <span class="life-date">{{ post.date | date: "%Y-%m-%d" }}</span>
           </div>
-          <div class="post-content">
-            <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
-            <div class="post-tags">
-              {% for tag in post.tags limit:3 %}
-              <span class="tag">#{{ tag }}</span>
-              {% endfor %}
-            </div>
-            <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 80 }}</p>
-          </div>
+          <h3 class="life-title"><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+          <p class="life-excerpt">{{ post.excerpt | strip_html | truncate: 60 }}</p>
         </article>
+        {% else %}
+          <p class="empty-tip">暂无随笔 (Category: life 或 随便写写)</p>
         {% endfor %}
       </div>
-    </main>
+    </div>
 
   </div>
 
@@ -76,166 +120,105 @@ layout: default
 </div>
 
 <style>
-  /* === 0. 针对首页的特殊布局调整 === */
-  .wrapper {
-    max-width: 100% !important;
-    padding: 0 !important;
-  }
+  /* === 0. 基础设置 === */
+  .wrapper { max-width: 100% !important; padding: 0 !important; }
+  .home-container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; animation: fadeIn 0.8s ease-out; }
   
-  .home-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 50px 20px;
-    animation: fadeIn 0.8s ease-out;
-  }
-
-  /* === 全局重置与基础样式 === */
   :root {
-    --primary-color: #3498db;
-    --bg-color: #f8f9fa;
-    --card-bg: #ffffff;
-    --text-main: #2c3e50;
-    --text-sub: #7f8c8d;
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-    --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
-    --radius-lg: 16px;
+    --primary: #2c3e50;
+    --accent: #3498db;
+    --text-light: #95a5a6;
+    --bg-gray: #f9f9f9;
+    --border: #eaeaea;
   }
 
-  /* 动画定义 */
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  /* 动画 */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* === 1. Hero Section === */
-  .hero-section {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 60px; padding: 0 10px;
-  }
-  .greeting { font-size: 2rem; font-weight: 700; color: var(--text-main); margin: 0; }
-  .wave { display: inline-block; animation: wave 2s infinite; transform-origin: 70% 70%; }
-  @keyframes wave { 0% { transform: rotate(0deg); } 10% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 30% { transform: rotate(14deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } 60% { transform: rotate(0deg); } 100% { transform: rotate(0deg); } }
-  .bio { font-size: 1.1rem; color: var(--text-sub); margin-top: 10px; font-weight: 300; }
+  /* === 1. Hero & Search (复用之前的样式，做微调) === */
+  .hero-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .greeting { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin: 0; }
+  .bio { font-size: 1rem; color: var(--text-light); margin-top: 5px; font-weight: 300; }
+  .clock-widget { text-align: right; font-family: monospace; color: var(--primary); }
+  #current-time { font-size: 2rem; font-weight: 700; line-height: 1; }
+  #current-date { font-size: 0.8rem; color: var(--text-light); letter-spacing: 1px; }
 
-  /* 时钟组件 */
-  .clock-widget {
-    text-align: right; font-family: 'Courier New', monospace; color: var(--text-main);
-  }
-  #current-time { font-size: 2.5rem; font-weight: 700; line-height: 1; letter-spacing: -2px; }
-  #current-date { font-size: 0.9rem; color: var(--text-sub); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
-
-  /* === 2. 搜索框样式 === */
-  .search-wrapper { position: relative; max-width: 600px; margin: 0 auto 60px; z-index: 10; }
-  .search-box {
-    position: relative; background: white; border-radius: 50px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; padding: 15px 25px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .search-box:hover, .search-box:focus-within { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
-  .search-icon { font-size: 1.2rem; color: #ccc; margin-right: 15px; }
-  #search-input {
-    border: none; outline: none; flex: 1; font-size: 1rem; color: var(--text-main); background: transparent;
-  }
-  #results-container {
-    position: absolute; top: 110%; left: 0; width: 100%; background: white; border-radius: 12px;
-    box-shadow: var(--shadow-md); list-style: none; z-index: 100;
-    padding: 10px 0; display: none;
-  }
+  .search-wrapper { position: relative; max-width: 500px; margin: 0 auto 50px; }
+  .search-box { background: white; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 12px 20px; transition: box-shadow 0.2s; }
+  .search-box:focus-within { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: var(--accent); }
+  .search-icon { margin-right: 10px; font-size: 0.9rem; }
+  #search-input { border: none; outline: none; flex: 1; font-size: 0.95rem; }
+  #results-container { position: absolute; top: 105%; left: 0; width: 100%; background: white; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); list-style: none; padding: 5px 0; display: none; z-index: 100;}
   #results-container:not(:empty) { display: block; }
-  #results-container li { padding: 10px 20px; border-bottom: 1px solid #f1f1f1; }
-  #results-container a { color: var(--text-main); text-decoration: none; display: block; }
-  #results-container a:hover { color: var(--primary-color); }
+  #results-container li { padding: 8px 15px; border-bottom: 1px solid #eee; }
+  #results-container a { text-decoration: none; color: var(--primary); font-size: 0.9rem; }
 
-  /* === 3. 单栏布局 (修改后) === */
-  .timeline-layout {
-    max-width: 800px; /* 限制列表宽度，提高阅读体验 */
-    margin: 0 auto 60px;
-  }
-
-  .main-feed-full {
-    width: 100%;
-    animation: slideInUp 0.8s ease-out 0.4s backwards;
-  }
-
-  .section-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    position: relative;
-    padding-left: 15px;
-    color: var(--text-main);
-  }
-  .section-title::before {
-    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-    width: 5px; height: 20px; background: var(--primary-color); border-radius: 3px;
-  }
-
-
-  /* === 4. 右侧文章列表 === */
-  .badge-new {
-    background: #e74c3c; color: white; font-size: 0.7rem;
-    padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px;
-  }
-
-  .post-list-modern {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    padding: 10px 0;
-  }
-
-  .post-item {
+  /* === 2. 双栏布局核心 === */
+  .dual-layout {
     display: flex;
-    padding: 25px 30px;
-    border-bottom: 1px solid #f5f5f5;
-    transition: background 0.2s;
+    gap: 60px; /* 栏间距 */
+    align-items: flex-start;
   }
-  .post-item:last-child { border-bottom: none; }
-  .post-item:hover { background: #fafafa; }
-
-  .post-meta-date {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: #f1f2f6; border-radius: 12px; width: 55px; height: 55px;
-    margin-right: 25px; flex-shrink: 0; color: var(--text-sub);
-    transition: background 0.3s, color 0.3s;
-  }
-  .post-item:hover .post-meta-date { background: var(--primary-color); color: white; }
-  .post-item:hover .post-meta-date .day { color: white; }
-
-  .post-meta-date .day { font-size: 1.2rem; font-weight: 700; color: var(--text-main); line-height: 1; }
-  .post-meta-date .month { font-size: 0.7rem; text-transform: uppercase; }
-
-  .post-content { flex: 1; }
   
-  .post-content h3 { margin: 0 0 8px 0; font-size: 1.15rem; }
-  .post-content h3 a { color: var(--text-main); text-decoration: none; }
-  .post-content h3 a:hover { color: var(--primary-color); }
+  .column { flex: 1; }
+  .study-column { flex: 1.2; } /* 学习栏略宽一点 */
+  .life-column { flex: 1; }
+
+  .main-title {
+    font-size: 1.4rem; font-weight: 700; color: var(--primary);
+    margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid var(--border);
+  }
+
+  /* === 左侧：学习样式 === */
+  .sub-section { margin-bottom: 35px; }
+  .sub-title {
+    font-size: 1.1rem; font-weight: 600; color: #34495e;
+    margin-bottom: 15px; display: flex; align-items: center;
+  }
+  .sub-title .icon { margin-right: 8px; font-size: 1.1rem; }
+
+  .minimal-list { list-style: none; padding: 0; margin: 0; }
+  .minimal-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px dashed var(--border);
+    transition: transform 0.2s;
+  }
+  .minimal-list li:hover { transform: translateX(5px); }
+  .minimal-list li:hover a { color: var(--accent); }
   
-  .post-excerpt {
-    font-size: 0.9rem; color: #666; margin-top: 8px; line-height: 1.5;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  }
+  .minimal-list a { text-decoration: none; color: #555; font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 80%; }
+  .minimal-list .date { font-family: monospace; font-size: 0.85rem; color: #aaa; flex-shrink: 0; }
+  .empty-tip { color: #ccc; font-style: italic; font-size: 0.9rem; }
 
-  .post-tags .tag {
-    font-size: 0.8rem; color: #95a5a6; margin-right: 10px;
-    background: #f0f2f5; padding: 2px 8px; border-radius: 4px;
+  /* === 右侧：生活随笔样式 === */
+  .life-item {
+    margin-bottom: 25px;
+    padding-left: 20px;
+    border-left: 2px solid var(--border);
+    transition: border-color 0.3s;
   }
+  .life-item:hover { border-left-color: var(--accent); }
+  
+  .life-meta { margin-bottom: 5px; }
+  .life-date { font-size: 0.8rem; background: #f0f2f5; color: #777; padding: 2px 6px; border-radius: 4px; }
+  
+  .life-title { margin: 0 0 6px 0; font-size: 1.1rem; line-height: 1.4; }
+  .life-title a { text-decoration: none; color: var(--primary); }
+  .life-title a:hover { color: var(--accent); }
+  
+  .life-excerpt { font-size: 0.9rem; color: #888; margin: 0; line-height: 1.6; }
 
-  /* === 5. Footer Stats === */
-  .footer-stats {
-    display: flex; justify-content: center; gap: 20px;
-    margin-top: 60px; color: var(--text-sub); font-size: 0.9rem;
-  }
-  .stat-pill {
-    background: white; padding: 6px 18px; border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; align-items: center;
-  }
-  .dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; margin-right: 10px; }
+  /* === Bottom Stats === */
+  .footer-stats { display: flex; justify-content: center; gap: 15px; margin-top: 60px; color: #aaa; font-size: 0.85rem; }
+  .stat-pill { display: flex; align-items: center; }
+  .dot { width: 6px; height: 6px; background: #2ecc71; border-radius: 50%; margin-right: 8px; }
 
-  /* 响应式适配 */
-  @media (max-width: 850px) {
-    .hero-section {
-      flex-direction: column; align-items: flex-start; gap: 20px;
-    }
-    .clock-widget { width: 100%; display: flex; justify-content: space-between; }
+  /* 移动端适配 */
+  @media (max-width: 768px) {
+    .dual-layout { flex-direction: column; gap: 40px; }
+    .hero-section { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .clock-widget { width: 100%; display: flex; justify-content: space-between; align-items: baseline; }
+    .main-title { font-size: 1.2rem; }
   }
 </style>
 
