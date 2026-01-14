@@ -3,20 +3,14 @@ description: "wnby的个人博客"
 avatar: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/0.png
 favicon: https://cdn.jsdelivr.net/gh/goldstine/goldstine.github.io/images/favicon.ico
 
-# 精简导航栏
+# 精简导航栏 (修改此处)
 navigation:
   - name: 首页
     url: /
-  - name: 论文精读
-    url: /papers
-  - name: 横向项目
-    url: /industry
-  - name: 个人项目
-    url: /projects
-  - name: 算法刷题
-    url: /algorithm
-  - name: 摄影记录
-    url: /photography
+  # 删除了原来的 论文、项目、算法 等链接，保持极简
+  # 如果需要，可以加一个归档页面查看所有文章
+  # - name: 归档
+  #   url: /projects 
 
 # 页脚只保留关键社交链接
 footer-links:
@@ -47,7 +41,7 @@ kramdown:
     css_class: 'highlight'
 
 sass:
-  style: :expanded
+  style: expanded
 
 plugins:
   - jekyll-sitemap
